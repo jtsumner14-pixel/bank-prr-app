@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Simulation — Assumptions Survey</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 820px; margin: 40px auto; padding: 0 32px 80px; color: #222; background: #fff; }
+  h1 { font-size: 22px; font-weight: 700; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 32px; }
+  h2 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #444; margin: 40px 0 16px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+  .q { margin-bottom: 24px; }
+  .q label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .q .hint { font-size: 12px; color: #888; margin-bottom: 6px; font-style: italic; }
+  .q input[type="text"], .q input[type="number"], .q select, .q textarea {
+    width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px 10px; font-size: 14px; font-family: inherit; background: #fafafa;
+  }
+  .q textarea { height: 72px; resize: vertical; }
+  .q .row { display: flex; gap: 16px; }
+  .q .row > div { flex: 1; }
+  .q .row label { font-weight: 400; font-size: 13px; }
+  .radio-group label { display: flex; align-items: center; gap: 6px; font-weight: 400; font-size: 14px; margin-bottom: 6px; }
+  .radio-group input { width: auto; }
+  .scale { display: flex; gap: 0; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+  .scale label { flex: 1; text-align: center; font-size: 12px; padding: 6px 2px; border-right: 1px solid #ccc; cursor: pointer; }
+  .scale label:last-child { border-right: none; }
+  .scale input { display: none; }
+  .scale input:checked + span { background: #1a1a2e; color: #fff; display: block; }
+  .scale label span { display: block; padding: 2px 0; border-radius: 0; }
+  .note-box { background: #f5f5f5; border-left: 3px solid #aaa; padding: 10px 14px; font-size: 13px; color: #555; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  table.grid th { background: #f0f0f0; text-align: left; padding: 6px 10px; border: 1px solid #ddd; font-weight: 600; }
+  table.grid td { padding: 6px 8px; border: 1px solid #ddd; }
+  table.grid input { border: none; background: transparent; width: 100%; font-size: 13px; font-family: inherit; }
+  .submit-area { margin-top: 48px; border-top: 1px solid #ddd; padding-top: 24px; }
+  .submit-area p { font-size: 13px; color: #666; }
+  @media print {
+    body { margin: 20px; padding: 0; }
+    .submit-area { page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Bank Simulation Program — Expert Assumptions Survey</h1>
+<p class="subtitle">
+  This survey collects your professional judgment on key parameters for a banking competition simulation used to teach the fundamentals of running a bank. Your inputs will calibrate the model's market structure, cost assumptions, risk parameters, and scoring mechanics. There are no right or wrong answers — we are looking for defensible, teachable assumptions.<br><br>
+  <strong>Estimated time:</strong> 25–35 minutes &nbsp;|&nbsp; <strong>Respond by:</strong> _______________
+</p>
+
+<!-- ======================================================= -->
+<h2>Section 1 — Market structure</h2>
+
+<div class="note-box">The simulation will feature a fictional regional banking market. Teams each run one bank competing for the same pool of customers.</div>
+
+<div class="q">
+  <label>1.1 How many competing banks (teams) should the base simulation support?</label>
+  <div class="hint">Fewer teams = more market power per bank; more teams = more realistic fragmentation.</div>
+  <div class="radio-group">
+    <label><input type="radio" name="q11" value="3"> <span>3 banks</span></label>
+    <label><input type="radio" name="q11" value="4"> <span>4 banks</span></label>
+    <label><input type="radio" name="q11" value="5"> <span>5 banks (recommended)</span></label>
+    <label><input type="radio" name="q11" value="6"> <span>6 banks</span></label>
+    <label><input type="radio" name="q11" value="other"> <span>Other: <input type="text" style="width:100px; display:inline;"></span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>1.2 What should the starting total deposit market size be (in the simulation's fictional currency)?</label>
+  <div class="hint">Suggest a round number that makes balance sheet math intuitive for participants (e.g. $1 billion, $5 billion).</div>
+  <input type="text" placeholder="e.g. $2 billion">
+</div>
+
+<div class="q">
+  <label>1.3 How should initial market share be distributed among banks at game start?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q13"> <span>Equal shares (each team starts identical)</span></label>
+    <label><input type="radio" name="q13"> <span>Slightly unequal (dominant bank + challengers)</span></label>
+    <label><input type="radio" name="q13"> <span>Highly unequal (one large incumbent, small new entrants)</span></label>
+    <label><input type="radio" name="q13"> <span>Random draw at game start</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>1.4 What loan types should be available in the simulation? (Check all that include)</label>
+  <div class="radio-group">
+    <label><input type="checkbox"> <span>Residential mortgage (30-yr fixed, ARM)</span></label>
+    <label><input type="checkbox"> <span>Home equity / HELOC</span></label>
+    <label><input type="checkbox"> <span>Consumer / auto loans</span></label>
+    <label><input type="checkbox"> <span>Credit cards</span></label>
+    <label><input type="checkbox"> <span>Small business / SBA loans</span></label>
+    <label><input type="checkbox"> <span>C&I (commercial &amp; industrial)</span></label>
+    <label><input type="checkbox"> <span>CRE (commercial real estate)</span></label>
+    <label><input type="checkbox"> <span>Construction loans</span></label>
+    <label><input type="checkbox"> <span>Agricultural loans</span></label>
+  </div>
+  <div class="hint">Recommended: 4–6 categories for complexity without overwhelming participants.</div>
+</div>
+
+<div class="q">
+  <label>1.5 What funding sources should be available?</label>
+  <div class="radio-group">
+    <label><input type="checkbox"> <span>Retail checking / savings deposits</span></label>
+    <label><input type="checkbox"> <span>CDs (certificates of deposit)</span></label>
+    <label><input type="checkbox"> <span>Commercial / institutional deposits</span></label>
+    <label><input type="checkbox"> <span>FHLB advances (wholesale borrowing)</span></label>
+    <label><input type="checkbox"> <span>Brokered deposits</span></label>
+    <label><input type="checkbox"> <span>Subordinated debt / senior notes</span></label>
+    <label><input type="checkbox"> <span>Common equity issuance</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>1.6 How should market share for deposits and loans be allocated among banks each round?</label>
+  <div class="hint">What factors should determine whether customers choose Bank A vs Bank B?</div>
+  <table class="grid">
+    <thead><tr><th>Factor</th><th>Include? (Y/N)</th><th>Relative weight (1–10)</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Interest rate offered (deposit rate paid / loan rate charged)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Marketing spend</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Branch / digital footprint (service quality)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Prior-round reputation / customer satisfaction score</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Credit standards (underwriting looseness)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Random market noise</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 2 — Cost structure assumptions</h2>
+
+<div class="q">
+  <label>2.1 What should the baseline operating expense ratio be as a % of average assets for a well-run bank in this simulation?</label>
+  <div class="hint">Real community banks typically run 2.5–3.5% of assets. Large banks 1.5–2.5%.</div>
+  <input type="text" placeholder="e.g. 3.0% of average assets">
+</div>
+
+<div class="q">
+  <label>2.2 How should operating expenses be categorized? Suggest a % of total OpEx for each:</label>
+  <table class="grid">
+    <thead><tr><th>Category</th><th>% of total OpEx</th><th>Fixed vs. variable?</th><th>Controllable by team?</th></tr></thead>
+    <tbody>
+      <tr><td>Personnel / staffing</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Technology / IT infrastructure</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Marketing &amp; customer acquisition</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Facilities / occupancy</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Compliance &amp; legal</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Credit / loan administration</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Other / overhead</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>2.3 Should underspending in a category (e.g. IT, compliance) have negative consequences in later rounds?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q23"> <span>Yes — this is a key teaching point (underspending IT → operational failures, compliance → fines)</span></label>
+    <label><input type="radio" name="q23"> <span>Yes, but only for very extreme underspending</span></label>
+    <label><input type="radio" name="q23"> <span>No — keep cost structure linear to avoid complexity</span></label>
+  </div>
+  <div class="hint">If yes, what's the suggested delay before consequences appear? (e.g. 1 round, 2 rounds)</div>
+  <input type="text" placeholder="e.g. 2 rounds lag">
+</div>
+
+<div class="q">
+  <label>2.4 How should marketing spend translate into deposit/loan market share gains?</label>
+  <div class="hint">Suggest a simple function. E.g. "Each $10M of marketing spend → 1% incremental market share, with diminishing returns above $30M."</div>
+  <textarea placeholder="Describe the relationship or suggest specific parameters..."></textarea>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 3 — Net interest margin and pricing</h2>
+
+<div class="q">
+  <label>3.1 What should the starting yield curve look like?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q31"> <span>Normal (upward sloping) — short rates ~2%, long rates ~4.5%</span></label>
+    <label><input type="radio" name="q31"> <span>Flat — short and long rates both ~3.5%</span></label>
+    <label><input type="radio" name="q31"> <span>Inverted — short rates above long rates</span></label>
+    <label><input type="radio" name="q31"> <span>Other: <input type="text" style="width:200px; display:inline;"></span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>3.2 What should the baseline net interest margin (NIM) be for a bank with an average loan/deposit mix?</label>
+  <div class="hint">Industry average community bank NIM is roughly 3.0–3.5%. Suggest what the simulation should target.</div>
+  <input type="text" placeholder="e.g. 3.25%">
+</div>
+
+<div class="q">
+  <label>3.3 Suggest baseline loan yields and deposit costs for each product category:</label>
+  <table class="grid">
+    <thead><tr><th>Product</th><th>Starting rate / yield</th><th>Min teams can offer</th><th>Max teams can offer</th></tr></thead>
+    <tbody>
+      <tr><td>30-yr fixed mortgage</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>ARM mortgage (5/1)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Consumer / auto</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Credit cards</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Small business</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>C&amp;I loans</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>CRE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Retail savings / checking (cost)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>CDs — 1 year (cost)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>FHLB advances (cost)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>3.4 How should non-interest income (fees, service charges) be modeled?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q34"> <span>Fixed % of assets (simple)</span></label>
+    <label><input type="radio" name="q34"> <span>Driven by account volume and team spending on digital / service quality</span></label>
+    <label><input type="radio" name="q34"> <span>Teams select specific fee products each round (e.g. wealth management, insurance)</span></label>
+    <label><input type="radio" name="q34"> <span>Exclude entirely — focus on NII only</span></label>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 4 — Credit risk and losses</h2>
+
+<div class="q">
+  <label>4.1 What baseline charge-off rate should apply to each loan type in a "normal" economic environment?</label>
+  <table class="grid">
+    <thead><tr><th>Loan type</th><th>Normal charge-off rate (annual)</th><th>Stressed charge-off rate</th></tr></thead>
+    <tbody>
+      <tr><td>Residential mortgage</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Consumer / auto</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Credit cards</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Small business / SBA</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>C&amp;I</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>CRE</td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>4.2 How should a bank's credit underwriting decisions affect its loss rate?</label>
+  <div class="hint">E.g. if a bank lowers its underwriting standards to capture more market share, how much should its charge-off rate increase?</div>
+  <textarea placeholder="Describe the relationship or suggest specific parameters..."></textarea>
+</div>
+
+<div class="q">
+  <label>4.3 Should teams be required to hold a loan loss reserve (ALLL / ACL)? If so, how should it be calculated?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q43"> <span>Yes — fixed % of loan portfolio by type (simple)</span></label>
+    <label><input type="radio" name="q43"> <span>Yes — teams set their own reserve level, but inadequate reserves trigger a regulatory penalty</span></label>
+    <label><input type="radio" name="q43"> <span>No — treat net charge-offs as a direct P&L item only</span></label>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 5 — Capital and regulatory requirements</h2>
+
+<div class="q">
+  <label>5.1 What minimum capital ratios should teams be required to maintain?</label>
+  <table class="grid">
+    <thead><tr><th>Ratio</th><th>Regulatory minimum</th><th>"Well capitalized" threshold</th><th>Penalty for breach</th></tr></thead>
+    <tbody>
+      <tr><td>CET1 / Tier 1 Capital Ratio</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Total Capital Ratio</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Leverage Ratio (Tier 1 / Assets)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>5.2 Should there be a liquidity requirement (e.g. simplified LCR or cash reserve ratio)?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q52"> <span>Yes — teams must hold a minimum % of assets in liquid instruments</span></label>
+    <label><input type="radio" name="q52"> <span>Yes — simplified: minimum loan-to-deposit ratio ceiling (e.g. max 90%)</span></label>
+    <label><input type="radio" name="q52"> <span>No — omit for simplicity</span></label>
+  </div>
+  <div class="hint">If yes, what minimum liquidity ratio do you suggest?</div>
+  <input type="text" placeholder="e.g. 20% of liabilities in liquid assets">
+</div>
+
+<div class="q">
+  <label>5.3 What happens when a bank breaches a regulatory minimum? (Rank in order of severity)</label>
+  <textarea placeholder="e.g. Round 1 breach = warning + no dividends; Round 2 breach = forced asset sale; Round 3 breach = bank failure / game over for team..."></textarea>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 6 — Macro events and scenario design</h2>
+
+<div class="q">
+  <label>6.1 Which macroeconomic shock events should the instructor be able to trigger during the game?</label>
+  <div class="hint">Rate these on importance to include.</div>
+  <table class="grid">
+    <thead><tr><th>Event</th><th>Include? (Y/N)</th><th>Teaching value (1–5)</th><th>Suggested severity / parameters</th></tr></thead>
+    <tbody>
+      <tr><td>Rate hike cycle (+200–300bps over 3 rounds)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Rate cut cycle</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Recession / credit downturn (charge-offs spike)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>CRE market collapse</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Bank run / liquidity crisis (deposit outflow shock)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Regulatory change (new capital rule)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Fintech competitor enters market (deposit share loss)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Cybersecurity incident (IT underspend penalty)</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Merger / acquisition opportunity</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>6.2 Should macro events be pre-announced (giving teams time to prepare) or surprise events?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q62"> <span>Always surprise — teaches real-world unpredictability</span></label>
+    <label><input type="radio" name="q62"> <span>Hints provided 1 round in advance — more instructional value</span></label>
+    <label><input type="radio" name="q62"> <span>Mix: some telegraphed, some surprise</span></label>
+    <label><input type="radio" name="q62"> <span>Instructor's discretion each game</span></label>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 7 — Scoring and winning conditions</h2>
+
+<div class="q">
+  <label>7.1 How should the winner be determined? (Allocate 100 points across these scoring dimensions)</label>
+  <table class="grid">
+    <thead><tr><th>Metric</th><th>Weight (total = 100)</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Return on Equity (ROE)</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Return on Assets (ROA)</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Simulated stock price / market cap</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Capital adequacy (being "well capitalized")</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Deposit / loan market share</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Net income growth over game</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Efficiency ratio (OpEx / Revenue)</td><td><input type="text"></td><td><input type="text"></td></tr>
+      <tr><td>Asset quality (NPA ratio)</td><td><input type="text"></td><td><input type="text"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="q">
+  <label>7.2 Should a bank be automatically eliminated (fail) during the game? If so, under what conditions?</label>
+  <textarea placeholder="e.g. Capital ratio falls below 4% for two consecutive rounds; or NPA ratio exceeds 15%..."></textarea>
+</div>
+
+<div class="q">
+  <label>7.3 How many rounds should a standard game last?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q73"> <span>6 rounds (~1.5 years simulated time)</span></label>
+    <label><input type="radio" name="q73"> <span>8 rounds (~2 years)</span></label>
+    <label><input type="radio" name="q73"> <span>10–12 rounds (~3 years) — recommended for full curriculum</span></label>
+    <label><input type="radio" name="q73"> <span>Configurable by instructor</span></label>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 8 — Pedagogy and participant experience</h2>
+
+<div class="q">
+  <label>8.1 Who is the primary audience for this simulation?</label>
+  <div class="radio-group">
+    <label><input type="checkbox"> <span>Bank employees (early career / associate programs)</span></label>
+    <label><input type="checkbox"> <span>Mid-career bank managers / lenders</span></label>
+    <label><input type="checkbox"> <span>Senior / executive education</span></label>
+    <label><input type="checkbox"> <span>MBA / finance students (academic)</span></label>
+    <label><input type="checkbox"> <span>Bank board directors</span></label>
+    <label><input type="checkbox"> <span>Regulators / examiners</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>8.2 What are the top 3–4 concepts you most want participants to walk away understanding?</label>
+  <textarea placeholder="e.g. NIM compression in a rising rate environment; the tradeoff between growth and capital conservation; the cost of underfunding compliance..."></textarea>
+</div>
+
+<div class="q">
+  <label>8.3 How much complexity is appropriate for a single round's decision sheet? (How many inputs should a team set per round?)</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q83"> <span>5–8 decisions (very accessible)</span></label>
+    <label><input type="radio" name="q83"> <span>10–15 decisions (moderate — recommended)</span></label>
+    <label><input type="radio" name="q83"> <span>20–30 decisions (high realism, longer debrief)</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>8.4 Should the simulation include a "news feed" each round that provides qualitative market signals (like real bank management would read)?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q84"> <span>Yes — essential for realism and engagement</span></label>
+    <label><input type="radio" name="q84"> <span>Yes — but only factual data, no narrative</span></label>
+    <label><input type="radio" name="q84"> <span>No — keep it purely quantitative</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>8.5 What information should teams be able to see about their competitors each round?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q85"> <span>Full transparency — all balance sheets public (like call report data)</span></label>
+    <label><input type="radio" name="q85"> <span>Market-level data only (rates offered, market shares) — no internal financials</span></label>
+    <label><input type="radio" name="q85"> <span>Summary league table only (rank, stock price, one or two KPIs)</span></label>
+    <label><input type="radio" name="q85"> <span>Progressive disclosure — more data unlocked in later rounds</span></label>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 9 — Technical and build considerations</h2>
+
+<div class="q">
+  <label>9.1 What is your preferred platform for the simulation?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q91"> <span>Web application (browser-based, real-time) — best for multi-team</span></label>
+    <label><input type="radio" name="q91"> <span>Excel / Google Sheets — fast to build, limited interactivity</span></label>
+    <label><input type="radio" name="q91"> <span>Hybrid — Excel for calculations, web dashboard for display</span></label>
+    <label><input type="radio" name="q91"> <span>No preference — follow the developer's recommendation</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>9.2 Should the simulation be available for licensing / deployment by third parties (e.g. banking associations, universities)?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="q92"> <span>Yes — design for multi-tenant SaaS model from the start</span></label>
+    <label><input type="radio" name="q92"> <span>Maybe later — build internally first</span></label>
+    <label><input type="radio" name="q92"> <span>No — internal use only</span></label>
+  </div>
+</div>
+
+<div class="q">
+  <label>9.3 Are there any existing bank simulations (e.g. Capsim Banking, Forio) you've used or evaluated? What did they do well or poorly?</label>
+  <textarea placeholder="Please share any relevant experience with comparable tools..."></textarea>
+</div>
+
+<!-- ======================================================= -->
+<h2>Section 10 — Open questions</h2>
+
+<div class="q">
+  <label>10.1 What is the single most important assumption that will make or break the realism of this simulation?</label>
+  <textarea placeholder="Your view..."></textarea>
+</div>
+
+<div class="q">
+  <label>10.2 What are you most worried could go wrong or be misunderstood by participants?</label>
+  <textarea placeholder="Your view..."></textarea>
+</div>
+
+<div class="q">
+  <label>10.3 Is there anything this survey didn't ask about that you think is critical to get right?</label>
+  <textarea placeholder="Any additional parameters, edge cases, or design principles..."></textarea>
+</div>
+
+<!-- ======================================================= -->
+<div class="submit-area">
+  <p><strong>Respondent name / organization (optional):</strong></p>
+  <input type="text" style="width:100%; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; padding:8px 10px; font-size:14px; background:#fafafa;">
+  <p style="margin-top:16px;"><strong>Years of banking industry experience:</strong></p>
+  <input type="text" style="width:200px; border:1px solid #ccc; border-radius:4px; padding:8px 10px; font-size:14px; background:#fafafa;">
+  <p style="margin-top:24px; color:#888;">Thank you. Please return this form to [coordinator name / email]. Responses will be aggregated and used to calibrate the simulation model — all inputs are confidential.</p>
+</div>
+
+</body>
+</html>
